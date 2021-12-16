@@ -1,12 +1,7 @@
 import logging
 import random
 import re
-from collections import namedtuple
 import pandas as pd
-
-# Fix Python2/Python3 incompatibility
-try: input = raw_input
-except NameError: pass
 
 log = logging.getLogger(__name__)
 data = pd.read_csv('dataset.csv', encoding='utf8')
