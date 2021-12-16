@@ -2,13 +2,14 @@ import logging
 import random
 import re
 from collections import namedtuple
+import pandas as pd
 
 # Fix Python2/Python3 incompatibility
 try: input = raw_input
 except NameError: pass
 
 log = logging.getLogger(__name__)
-
+data = pd.read_csv('dataset.csv', encoding='utf8')
 
 class Key:
     def __init__(self, word, weight, decomps):
@@ -212,18 +213,28 @@ class Eliza:
         return random.choice(self.finals)
 
     def run(self):
-        print(self.initial())
-        print("TEST")
-        while True:
-            sent = input('> ')
+        processed_data = pd.DataFrame(columns=["name", "line"])
+        opening = self.initial()
+        print(opening)
+        processed_data = processed_data.append({"name": "Eliza", "line": opening}, ignore_index=True)
+        for index, line in data.iterrows():
+            sent = line["line"] #input('> ')
+            if type(sent) is str:
+                output = self.respond(sent)
+                if output is None:
+                    break
+                print(">"+sent)
+                processed_data = processed_data.append({"name": line["name"], "line": line["line"]}, ignore_index=True)
+                processed_data = processed_data.append({"name": "Eliza", "line": output}, ignore_index=True)
+                print(output)
+            else:
+                continue
 
-            output = self.respond(sent)
-            if output is None:
-                break
+        ending = self.final()
+        print(ending)
+        processed_data.append({"name": "Eliza", "line":ending}, ignore_index=True)
+        processed_data.to_csv(r'output.csv', header = True, encoding="utf8")
 
-            print(output)
-
-        print(self.final())
 
 
 def main():
