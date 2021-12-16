@@ -4,7 +4,7 @@ import re
 import pandas as pd
 
 log = logging.getLogger(__name__)
-data = pd.read_csv('dataset.csv', encoding='utf8')
+data = pd.read_csv('pilot-script.csv', encoding='utf8')
 
 class Key:
     def __init__(self, word, weight, decomps):
@@ -228,7 +228,7 @@ class Eliza:
         ending = self.final()
         print(ending)
         processed_data.append({"name": "Eliza", "line":ending}, ignore_index=True)
-        processed_data.to_csv(r'output.csv', header = True, encoding="utf8")
+        processed_data.to_csv(r'dataset.csv', header = True, encoding="utf8")
 
 
 
