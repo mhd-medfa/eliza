@@ -14,4 +14,4 @@ for line in data:
     if len(processed_line)==2 and (processed_line[0] not in ["Scene", "Story"]):
         processed_data = processed_data.append({"name": processed_line[0].strip(), "line": processed_line[1]}, ignore_index=True)
 
-processed_data.to_csv(r'dataset.csv', header = True, encoding="utf8")
+processed_data.to_csv(r'pilot-script.csv', header = True, encoding="utf8")
